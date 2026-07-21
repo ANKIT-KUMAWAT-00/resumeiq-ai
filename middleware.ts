@@ -6,6 +6,7 @@ const protectedRoutes = ['/dashboard', '/review', '/history', '/billing', '/sett
 const authRoutes = ['/login', '/signup', '/forgot-password', '/reset-password']
 
 export async function middleware(request: NextRequest) {
+  
   // Refresh session and get the base response
   const response = await updateSession(request)
 
@@ -20,7 +21,12 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+  data: { user },
+  error,
+} = await supabase.auth.getUser();
+
+
   const path = request.nextUrl.pathname
 
   // Redirect unauthenticated users trying to access protected routes

@@ -60,8 +60,7 @@ export async function signup(data: SignupFormValues) {
   const parsed = signupSchema.safeParse(data);
 
   if (!parsed.success) {
-    console.log("Validation failed:", parsed.error);
-    return { error: "Validation failed" };
+    return { error: "Invalid form data" };
   }
 
   const supabase = await createClient();
@@ -69,19 +68,19 @@ export async function signup(data: SignupFormValues) {
  const { data: authData, error } = await supabase.auth.signUp({
   email: parsed.data.email,
   password: parsed.data.password,
+  options: {
+    data: {
+      full_name: parsed.data.fullName,
+    },
+    emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+  },
 });
-
-  console.log("========== SIGNUP ==========");
-console.log("AUTH DATA:", authData);
-console.log("AUTH ERROR:", error);
-console.log("============================");
-
   if (error) {
     return { error: error.message };
   }
 
   return {
-    success: "Account created successfully",
+    success: "Account created successfully. Please check your email.",
   };
 }
 

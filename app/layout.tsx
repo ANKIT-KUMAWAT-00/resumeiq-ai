@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
 import "./globals.css";
+import Script from 'next/script'
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -25,6 +26,10 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen antialiased`}>
         {/* All of your pages will render right here inside {children} */}
         {children}
+        <Script
+  src="https://checkout.razorpay.com/v1/checkout.js"
+  strategy="beforeInteractive"
+/>
       </body>
     </html>
   );
