@@ -17,7 +17,7 @@ export async function login(data: LoginFormValues) {
     email: parsed.data.email,
     password: parsed.data.password,
   })
-
+  console.log("LLogin input:", parsed.data)
   console.log("AUTH DATA:", authData)
   console.log("AUTH ERROR:", error)
 
@@ -29,30 +29,60 @@ export async function login(data: LoginFormValues) {
   redirect("/dashboard")
 }
 
+// export async function signup(data: SignupFormValues) {
+//   const parsed = signupSchema.safeParse(data)
+//   if (!parsed.success) {
+//     return { error: 'Invalid form data' }
+//   }
+
+//   const supabase = await createClient()
+//   const { error } = await supabase.auth.signUp({
+//     email: parsed.data.email,
+//     password: parsed.data.password,
+//     options: {
+//       data: {
+//         full_name: parsed.data.fullName,
+//       },
+      
+//       // Ensure you configure this URL in your Supabase Auth settings
+//       emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+//     },
+//   })
+  
+
+//   if (error) {
+//     return { error: error.message }
+//   }
+
+//   return { success: 'Check your email to verify your account.' }
+// }
 export async function signup(data: SignupFormValues) {
-  const parsed = signupSchema.safeParse(data)
+  const parsed = signupSchema.safeParse(data);
+
   if (!parsed.success) {
-    return { error: 'Invalid form data' }
+    console.log("Validation failed:", parsed.error);
+    return { error: "Validation failed" };
   }
 
-  const supabase = await createClient()
-  const { error } = await supabase.auth.signUp({
-    email: parsed.data.email,
-    password: parsed.data.password,
-    options: {
-      data: {
-        full_name: parsed.data.fullName,
-      },
-      // Ensure you configure this URL in your Supabase Auth settings
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
-    },
-  })
+  const supabase = await createClient();
+
+ const { data: authData, error } = await supabase.auth.signUp({
+  email: parsed.data.email,
+  password: parsed.data.password,
+});
+
+  console.log("========== SIGNUP ==========");
+console.log("AUTH DATA:", authData);
+console.log("AUTH ERROR:", error);
+console.log("============================");
 
   if (error) {
-    return { error: error.message }
+    return { error: error.message };
   }
 
-  return { success: 'Check your email to verify your account.' }
+  return {
+    success: "Account created successfully",
+  };
 }
 
 export async function logout() {
