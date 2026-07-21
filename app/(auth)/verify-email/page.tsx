@@ -21,9 +21,11 @@ export default function VerifyEmailPage() {
           If you don't see it, check your spam folder!
         </p>
         <div className="pt-4 flex flex-col gap-2">
-          <Button asChild variant="default" className="w-full">
-            <Link href="/login">Back to Login</Link>
-          </Button>
+         <Link href="/login">
+  <Button variant="default" className="w-full">
+    Back to Login
+  </Button>
+</Link>
         </div>
       </CardContent>
     </Card>

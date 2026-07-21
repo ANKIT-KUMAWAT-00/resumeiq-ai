@@ -43,7 +43,10 @@ export async function POST(request: NextRequest) {
             stripe_subscription_id: subscriptionId,
             status: subscription.status,
             price_id: subscription.items.data[0].price.id,
-            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            current_period_end: new Date(
+  subscription.items.data[0].current_period_end * 1000
+).toISOString(),
             cancel_at_period_end: subscription.cancel_at_period_end,
           }, { onConflict: 'user_id' })
 
@@ -69,7 +72,10 @@ export async function POST(request: NextRequest) {
           await supabaseAdmin.from('subscriptions').update({
             status: subscription.status,
             price_id: subscription.items.data[0].price.id,
-            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            // current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            current_period_end: new Date(
+  subscription.items.data[0].current_period_end * 1000
+).toISOString(),
             cancel_at_period_end: subscription.cancel_at_period_end,
           }).eq('stripe_customer_id', subscription.customer as string)
 
