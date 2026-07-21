@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { reviewReportSchema } from '@/lib/gemini/schema'
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
-const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-2.0-flash' })
+const model = genAI.getGenerativeModel({ model: process.env.GEMINI_MODEL || 'gemini-2.5-flash' })
 
 export async function POST(request: NextRequest) {
   try {
