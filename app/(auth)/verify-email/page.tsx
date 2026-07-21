@@ -1,47 +1,31 @@
-import { NextResponse } from "next/server";
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MailCheck } from "lucide-react";
+import Link from "next/link";
 
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  
-  // The secure code sent by Supabase in the email link
-  const code = searchParams.get("code");
-  
-  // Where to send them after successful login (defaults to dashboard)
-  const next = searchParams.get("next") ?? "/dashboard";
-
-  if (code) {
-    const cookieStore = await cookies();
-    
-    // Initialize the Supabase server client
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          get(name: string) {
-            return cookieStore.get(name)?.value;
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            cookieStore.set({ name, value, ...options });
-          },
-          remove(name: string, options: CookieOptions) {
-            cookieStore.set({ name, value: "", ...options });
-          },
-        },
-      }
-    );
-
-    // Exchange the code for a verified user session
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    
-    if (!error) {
-      // Success! Send them to the dashboard.
-      return NextResponse.redirect(`${origin}${next}`);
-    }
-  }
-
-  // If the code is missing or expired, redirect them back to login with an error flag
-  return NextResponse.redirect(`${origin}/login?error=Invalid+or+expired+verification+link`);
+export default function VerifyEmailPage() {
+  return (
+    <Card className="w-full">
+      <CardHeader className="space-y-1 flex flex-col items-center text-center">
+        <div className="bg-primary/10 p-3 rounded-full mb-4">
+          <MailCheck className="h-8 w-8 text-primary" />
+        </div>
+        <CardTitle className="text-2xl tracking-tight">Check your email</CardTitle>
+        <CardDescription>
+          We just sent a verification link to your inbox. 
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex flex-col space-y-4 text-center">
+        <p className="text-sm text-muted-foreground">
+          Click the link in the email to verify your account and get started with ResumeIQ AI. 
+          If you don't see it, check your spam folder!
+        </p>
+        <div className="pt-4 flex flex-col gap-2">
+          <Button asChild variant="default" className="w-full">
+            <Link href="/login">Back to Login</Link>
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
