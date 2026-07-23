@@ -55,6 +55,7 @@ export async function POST(req: NextRequest) {
       .from("subscriptions")
       .upsert({
         user_id: user.id,
+        // Using Razorpay payment ID and order ID as placeholders for razorpay fields
         stripe_customer_id: razorpay_payment_id,
         stripe_subscription_id: razorpay_order_id,
         status: "active",

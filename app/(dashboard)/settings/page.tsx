@@ -46,7 +46,7 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        {/* Billing & Subscription Card (Stripe Hookup) */}
+        {/* Billing & Subscription Card (razorpay Hookup) */}
         <Card>
           <CardHeader>
             <CardTitle>Subscription & Billing</CardTitle>
@@ -64,7 +64,7 @@ export default function SettingsPage() {
                 <div className="font-bold text-xl">$0<span className="text-sm font-normal text-muted-foreground">/mo</span></div>
               </div>
             </div>
-            {/* This button will eventually hook up to your Stripe Customer Portal */}
+            {/* This button will eventually hook up to your Razorpay Customer Portal */}
             <Button variant="outline" className="w-full">
               Upgrade to Pro
             </Button>

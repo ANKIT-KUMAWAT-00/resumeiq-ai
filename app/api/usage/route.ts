@@ -40,7 +40,7 @@ export async function GET(request: Request) {
     const used = count || 0;
     const remaining = Math.max(0, FREE_LIMIT - used);
     
-    // Placeholder for Stripe integration (Module 9)
+    // Placeholder for razorpay integration (Module 9)
     const isPro = false; 
 
     // 4. Return the usage stats to the frontend
