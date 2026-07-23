@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { razorpay } from "@/lib/razorpay/client";
+import { getRazorpayClient } from "@/lib/razorpay/client";
 
 export async function POST() {
   try {
@@ -30,6 +30,9 @@ export async function POST() {
       );
     }
 
+    // Initialize Razorpay only when needed
+    const razorpay = getRazorpayClient();
+
     const order = await razorpay.orders.create({
       amount: 29900,
       currency: "INR",
@@ -41,7 +44,7 @@ export async function POST() {
 
     return NextResponse.json(order);
   } catch (err) {
-    console.error(err);
+    console.error("Razorpay Error:", err);
 
     return NextResponse.json(
       { error: "Failed to create order" },
