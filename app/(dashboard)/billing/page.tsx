@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { UpgradeButton, ManageSubscriptionButton } from './billing-buttons'
-import { hasFeature } from '@/lib/stripe/plans'
+
 
 export default async function BillingPage() {
   const supabase = await createClient()
@@ -70,10 +70,7 @@ export default async function BillingPage() {
             <div className="space-y-2">
               <h4 className="text-sm font-semibold">Plan Limits</h4>
               <ul className="text-sm space-y-2">
-                <FeatureItem text="Unlimited Reviews" active={hasFeature(profile?.plan as 'free'|'pro', 'unlimitedReviews')} />
-                <FeatureItem text="Advanced ATS Report" active={hasFeature(profile?.plan as 'free'|'pro', 'advancedATS')} />
-                <FeatureItem text="AI Bullet Rewriting" active={hasFeature(profile?.plan as 'free'|'pro', 'aiRewrite')} />
-                <FeatureItem text="Export to PDF" active={hasFeature(profile?.plan as 'free'|'pro', 'pdfExport')} />
+                
               </ul>
             </div>
           </CardContent>
@@ -89,7 +86,7 @@ export default async function BillingPage() {
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground space-y-4">
             <p>
-              If you have any issues with your billing, please contact our support team. We use Stripe for secure payment processing.
+              If you have any issues with your billing, please contact our support team. We use razorpay for secure payment processing.
             </p>
             <p>
               Upgrading to Pro gives you immediate access to all advanced AI features and bypasses the daily rate limit.
