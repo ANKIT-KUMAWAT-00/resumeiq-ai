@@ -66,6 +66,8 @@ export async function POST(request: NextRequest) {
     const userPrompt = `Job Description:\n${jobDescription}\n\nResume:\n${resumeText}`
 
     // 3. Call Gemini
+    console.log("API Key starts with:", process.env.GEMINI_API_KEY?.slice(0, 10));
+console.log("Model:", process.env.GEMINI_MODEL);
     const result = await model.generateContent([systemPrompt, userPrompt])
     let responseText = result.response.text()
     
