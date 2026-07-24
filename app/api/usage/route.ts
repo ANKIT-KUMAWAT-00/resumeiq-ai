@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     }
 
     // 2. Calculate Usage (Count how many reviews they have generated)
-    // If you add Stripe later, you would also check a 'profiles' table here for Pro status
+   
     const { count, error: countError } = await supabase
       .from("reviews")
       .select("*", { count: "exact", head: true })
